@@ -24,7 +24,7 @@ public:
             j = half - i;		// cursor in array2
             cout<<"111 "<<"i:"<<i<<" j:"<<j<<endl;
             if (i < m && j>0 && nums2[j-1] > nums1[i]) left = i + 1;
-            else if (i > 0 && j<n && nums2[j] < nums1[i-1]) right = i -1;
+            else if (i > 0 && j<n && nums2[j] < nums1[i-1]) right = i;
             else
             {
 				cout<<"222 "<<"i:"<<i<<" j:"<<j<<endl;

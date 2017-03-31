@@ -3,7 +3,8 @@ public:
     vector<int> searchRange(vector<int>& nums, int target) {
         vector<int> res(2, -1);
         if (nums.empty()) return res;
-        int left = 0, right = nums.size() - 1;
+		// [  )   left
+        int left = 0, right = nums.size();
         int mid = left;
         while (left < right)
         {
@@ -16,7 +17,8 @@ public:
         }
         if (nums[left]!=target) return res;
         else res[0] = left;
-        
+       
+		// (  ]
         right = nums.size() - 1;
         while (left < right)
         {

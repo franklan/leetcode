@@ -1,0 +1,21 @@
+### Solution1: o(n)
+
+http://www.geeksforgeeks.org/largest-rectangle-under-histogram/
+
+* Create an empty stack.
+* Start from first bar, and do following for every bar ‘hist[i]’ where ‘i’ varies from 0 to n-1.
+	* If stack is empty or hist[i] is higher than the bar at top of stack, then push ‘i’ to stack.
+	* If this bar is smaller than the top of stack, then keep removing the top of stack while top of the stack is greater. Let the removed bar be hist[tp]. Calculate area of rectangle with hist[tp] as smallest bar. For hist[tp], the ‘left index’ is previous (previous to tp) item in stack and ‘right index’ is ‘i’ (current index).
+* If the stack is not empty, then one by one remove all bars from stack and do step 2.b for every removed bar.
+
+直方图升高时不涉及最大矩形，保存index
+
+直方图降低时，遍历以往的index，规划res最大值。
+降低时如何保证跨度最大？heights[index.back()] >= heights[i]])]
+
+### Solution2: o(nlg(n))
+
+divide and conquer
+
+* find the miniest num in histogram
+* recursive on left and right part

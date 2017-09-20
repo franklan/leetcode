@@ -1,0 +1,101 @@
+class LRUCache {
+public:
+    struct Node
+    {
+        int key;
+        int value;
+        Node* prev;
+        Node* next;
+    };
+    LRUCache(int capacity) {
+        for (int i = 0; i < capacity; ++i)
+        {
+            Node* n = new Node();
+            free_.push_back(n);
+        }
+        head_ = new Node();
+        tail_ = new Node();
+        head_->next = tail_;
+        head_->prev = nullptr;
+        tail_->prev = head_;
+        tail_->next = nullptr;
+    }
+    ~LRUCache() 
+    {
+        for (auto it : free_)
+        {
+            delete it;
+            it = nullptr;
+        }
+        delete head_;
+        delete tail_;
+        head_ = tail_ = nullptr;
+    }
+    int get(int key) {
+        if (m_.find(key) != m_.end())
+        {
+            Node* node = m_[key];
+            detach(node);
+            attach(node);
+            return node->value;
+        }
+        else
+            return -1;
+    }
+    
+    void put(int k, int v) 
+    {
+        Node* node = NULL;
+        if (m_.find(k) != m_.end())
+        {
+            node = m_[k];
+            detach(node);
+            node->value = v;
+            attach(node);
+        }
+        else
+        {
+            if (free_.empty())
+            {
+                node = tail_->prev;
+                detach(node);
+                m_.erase(node->key);
+            }
+            else
+            {
+                node = free_.back();
+                free_.pop_back();
+            }
+            node->key = k;
+            node->value = v;
+            m_[k] = node;
+            attach(node);
+        }
+        
+    }
+private:
+    void detach(Node* node) 
+    {
+        node->prev->next = node->next;
+        node->next->prev = node->prev;
+    }
+    void attach(Node* node) 
+    {
+        node->next = head_->next;
+        node->prev = head_;
+        head_->next->prev = node;
+        head_->next = node;
+    }
+private:
+    unordered_map<int, Node*> m_;
+    vector<Node*> free_;
+    Node* head_;
+    Node* tail_;
+};
+
+/**
+ * Your LRUCache object will be instantiated and called as such:
+ * LRUCache obj = new LRUCache(capacity);
+ * int param_1 = obj.get(key);
+ * obj.put(key,value);
+ */

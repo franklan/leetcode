@@ -19,3 +19,7 @@ divide and conquer
 
 * find the miniest num in histogram
 * recursive on left and right part
+
+
+### Reference
+http://www.cnblogs.com/lichen782/p/leetcode_Largest_Rectangle_in_Histogram.html
